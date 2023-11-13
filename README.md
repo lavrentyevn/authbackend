@@ -15,12 +15,12 @@ It is important to note that passwords are **not** stored in a decoded state. An
 ## Authentication
 You can send a JSON object consisting of a username and a password to a non-protected API, which will check if there is a user with such a username in a database, then it will use **bcrypt** to compare a decoded password with a hashed password. Finally, the server will send two types of **jwt** tokens.
 
--  Access Token
+-  Access Token__
 This token is necessary for accessing any protected route. This token is not stored in a database; it is sent as a JSON object, which can be used later as a Bearer Token. It also has an expiration time, which is usually short (< 15 min).
 
 <img width="772" alt="Снимок экрана 2023-11-13 в 12 15 03" src="https://github.com/lavrentyevn/authbackend/assets/111048277/e7753d5b-604a-47f1-97ac-862ea4bc0d58">
 
--  Refresh Token
+-  Refresh Token__
 This token is necessary for creating a new access token after it has expired (or been lost). This token is stored in a database; it is sent as a cookie, which has the following options:
 
 --  httpOnly:true
