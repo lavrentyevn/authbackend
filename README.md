@@ -1,70 +1,47 @@
-# Getting Started with Create React App
+# Authentication on Express JS using JWT
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a backend application that implements:
 
-## Available Scripts
+## Registration
+You can send a JSON object consisting of a username and a password to a non-protected API, which will check if there is already a user with such a username in a database and, if not, save your data and send a 200 status message. It is important to note that passwords are **not** stored in a decoded state. Any password is stored as a **hash**, which can be obtained by a password hashing algorithm, such as **bcrypt**.
+<img width="775" alt="Снимок экрана 2023-11-13 в 12 05 12" src="https://github.com/lavrentyevn/authbackend/assets/111048277/bb559b5b-98e3-4134-a1d6-03df035e64ff">
+<img width="543" alt="Снимок экрана 2023-11-13 в 12 47 03" src="https://github.com/lavrentyevn/authbackend/assets/111048277/f35767ed-8796-462b-9947-07dc757277e1">
 
-In the project directory, you can run:
 
-### `npm start`
+## Authentication
+You can send a JSON object consisting of a username and a password to a non-protected API, which will check if there is a user with such a username in a database, then it will use **bcrypt** to compare a decoded password with a hashed password. Finally, the server will send two types of **jwt** tokens.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+-Access Token
+This token is necessary for accessing any protected route. This token is not stored in a database; it is sent as a JSON object, which can be used later as a Bearer Token. It also has an expiration time, which is usually short (< 15 min).
+<img width="772" alt="Снимок экрана 2023-11-13 в 12 15 03" src="https://github.com/lavrentyevn/authbackend/assets/111048277/e7753d5b-604a-47f1-97ac-862ea4bc0d58">
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+-Refresh Token
+This token is necessary for creating a new access token after it has expired (or been lost). This token is stored in a database; it is sent as a cookie, which has the following options:
 
-### `npm test`
+--httpOnly:true
+This is important as it makes our cookies only accessible through http requests, which means that it cannot be obtained through JavaScript.
+--secure:true
+It makes our cookies only work with secure routes (https).
+--sameSite:"none"
+It makes cookies work with both cross-site and same-site requests.
+--maxAge: 24 * 60 * 60 * 1000
+Cookie must also have an expiration time.
+<img width="770" alt="Снимок экрана 2023-11-13 в 12 23 59" src="https://github.com/lavrentyevn/authbackend/assets/111048277/04b17967-e34e-473c-a44c-80982c97d2ed">
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Refresh
+Access tokens have a short expiration time. Refresh tokens allow us to create a new access token, which can be used to access protected routes. It is important to note that we do not have to send a JSON object consisting of user data to this request. We send a cookie that has a refresh token.
+<img width="771" alt="Снимок экрана 2023-11-13 в 12 16 20" src="https://github.com/lavrentyevn/authbackend/assets/111048277/5fa595c5-881d-4e74-b768-e784fe759f1e">
 
-### `npm run build`
+## Logout
+Logging out deletes our refresh token (a cookie that has a refresh token), which prevents us from creating new access tokens.
+<img width="768" alt="Снимок экрана 2023-11-13 в 12 24 21" src="https://github.com/lavrentyevn/authbackend/assets/111048277/36879d5f-454a-4c7b-8282-cf45d8736018">
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### User data is stored in MongoDB
+As an example, we can send a request to a protected api, which checks the access token.
+<img width="554" alt="Снимок экрана 2023-11-13 в 13 11 09" src="https://github.com/lavrentyevn/authbackend/assets/111048277/533543f3-fb88-4dcc-b913-d2a51894daa5">
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+If the token is valid, we can access data
+<img width="766" alt="Снимок экрана 2023-11-13 в 12 15 23" src="https://github.com/lavrentyevn/authbackend/assets/111048277/7e8c73fa-499e-48f7-aca0-4bd698cdd9db">
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+The same data in MongoDB
+<img width="724" alt="Снимок экрана 2023-11-13 в 13 15 09" src="https://github.com/lavrentyevn/authbackend/assets/111048277/0396e7a6-e8fd-45bc-8563-e475f0d97ede">
