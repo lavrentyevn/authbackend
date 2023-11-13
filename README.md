@@ -3,9 +3,11 @@
 This is a backend application that implements:
 
 ## Registration
-You can send a JSON object consisting of a username and a password to a non-protected API, which will check if there is already a user with such a username in a database and, if not, save your data and send a 200 status message. It is important to note that passwords are **not** stored in a decoded state. Any password is stored as a **hash**, which can be obtained by a password hashing algorithm, such as **bcrypt**.
+You can send a JSON object consisting of a username and a password to a non-protected API, which will check if there is already a user with such a username in a database and, if not, save your data and send a 200 status message.
 
 <img width="775" alt="Снимок экрана 2023-11-13 в 12 05 12" src="https://github.com/lavrentyevn/authbackend/assets/111048277/bb559b5b-98e3-4134-a1d6-03df035e64ff">
+
+It is important to note that passwords are **not** stored in a decoded state. Any password is stored as a **hash**, which can be obtained by a password hashing algorithm, such as **bcrypt**.
 
 <img width="543" alt="Снимок экрана 2023-11-13 в 12 47 03" src="https://github.com/lavrentyevn/authbackend/assets/111048277/f35767ed-8796-462b-9947-07dc757277e1">
 
