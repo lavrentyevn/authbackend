@@ -23,16 +23,16 @@ This token is necessary for accessing any protected route. This token is not sto
 -  Refresh Token <br/>
 This token is necessary for creating a new access token after it has expired (or been lost). This token is stored in a database; it is sent as a cookie, which has the following options:
 
-httpOnly:true
+httpOnly:true <br/>
 This is important as it makes our cookies only accessible through http requests, which means that it cannot be obtained through JavaScript.
-
-secure:true
+ 
+secure:true <br/>
 It makes our cookies only work with secure routes (https).
 
-sameSite:"none"
+sameSite:"none" <br/>
 It makes cookies work with both cross-site and same-site requests.
 
-maxAge: 24 * 60 * 60 * 1000
+maxAge: 24 * 60 * 60 * 1000 <br/>
 Cookie must also have an expiration time.
 
 <img width="770" alt="Снимок экрана 2023-11-13 в 12 23 59" src="https://github.com/lavrentyevn/authbackend/assets/111048277/04b17967-e34e-473c-a44c-80982c97d2ed">
